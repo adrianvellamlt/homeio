@@ -1,0 +1,11 @@
+<img id="stream-image"/>
+
+{{#section 'script'}}
+<script>
+    const namespace = "stream-1921681103-2x2";
+    const socket = io.connect(`${window.location.protocol}//${window.location.hostname}:${window.location.port}/${namespace}`);
+    socket.on("frame", frame => {
+        document.getElementById("stream-image").src = frame;
+    });
+</script>
+{{/section}}

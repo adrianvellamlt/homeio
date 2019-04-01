@@ -1,0 +1,74 @@
+{
+  "name": "homeio",
+  "version": "1.0.0",
+  "description": "HomeIO API with streaming and IOT functionalities",
+  "main": "app.js",
+  "dependencies": {
+    "net": "^1.0.2",
+    "socket.io": "^2.2.0",
+    "compression": "^1.7.4",
+    "express": "~4.16.4",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.3.1",
+    "express-handlebars": "^3.0.2",
+    "@fortawesome/fontawesome-free": "5.8.1",
+    "bootstrap": "4.3.1",
+    "chart.js": "2.8.0",
+    "datatables.net-bs4": "1.10.19",
+    "jquery": "3.3.1",
+    "jquery.easing": "^1.4.1"
+  },
+  "devDependencies": {
+    "@types/compression": "^0.0.36",
+    "@types/express": "~4.16.1",
+    "@types/express-session": "^1.15.12",
+    "@types/express-validator": "^3.0.0",
+    "@types/express-handlebars": "^0.0.30",
+    "@types/socket.io": "^2.1.2",
+    "browser-sync": "2.26.3",
+    "del": "4.0.0",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "6.0.0",
+    "gulp-clean-css": "4.0.0",
+    "gulp-header": "2.0.7",
+    "gulp-plumber": "^1.2.1",
+    "gulp-rename": "1.4.0",
+    "gulp-sass": "4.0.2",
+    "gulp-uglify": "3.0.2",
+    "merge-stream": "^1.0.1"
+  },
+  "scripts": {
+    "start": "npm run serve",
+    "build": "npm run build-sass && npm run build-ts && npm run tslint && npm run copy-static-assets",
+    "serve": "node dist/server.js",
+    "watch-node": "nodemon dist/server.js",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run watch-node\"",
+    "test": "jest --forceExit --coverage --verbose",
+    "watch-test": "npm run test -- --watchAll",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "build-sass": "node-sass src/public/css/main.scss dist/public/css/main.css",
+    "watch-sass": "node-sass -w src/public/css/main.scss dist/public/css/main.css",
+    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "copy-static-assets": "ts-node copyStaticAssets.ts",
+    "debug": "npm run build && npm run watch-debug",
+    "serve-debug": "nodemon --inspect dist/server.js",
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrianvellamlt/homeio.git"
+  },
+  "keywords": [
+    "smarthome",
+    "iot",
+    "streaming",
+    "cctv"
+  ],
+  "author": "Adrian Vella",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adrianvellamlt/homeio/issues"
+  },
+  "homepage": "https://github.com/adrianvellamlt/homeio#readme"
+}

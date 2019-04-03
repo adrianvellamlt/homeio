@@ -68,5 +68,5 @@ export default class SocketStream
         this.clientsocket = clientsocket;
     }
 
-    get FPS() { return 30; };
+    get FPS() { return 24; };
 }

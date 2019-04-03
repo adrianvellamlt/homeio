@@ -5,7 +5,7 @@
             "type": "node",
             "request": "launch",
             "name": "DEBUG",
-            "preLaunchTask": "typescript",
+            "preLaunchTask": "build",
             "cwd": "${workspaceRoot}",
             "program": "${workspaceRoot}\\src\\server.ts",
             "outFiles": [ 

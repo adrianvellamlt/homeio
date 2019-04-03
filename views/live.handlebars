@@ -1,24 +1,6 @@
-<img id="stream-image"/>
+<canvas id="video-stream">
+</canvas>
 
 {{#section 'script'}}
-<script>
-    const namespace = "stream-1921681103-2x2";
-    const socket = io.connect(`${window.location.protocol}//${window.location.hostname}:${window.location.port}/${namespace}`);
-
-    socket.on("frame", frame => {
-        document.getElementById("stream-image").src = frame;
-    });
-    socket.on("connect_error", (err) => {
-        console.log("FRAME_STREAM:Connect error");
-    });
-    socket.on("connect_timeout", (err) => {
-        console.log("FRAME_STREAM:Connect timed out");
-    });
-    socket.on("error", (err) => {
-        console.log("FRAME_STREAM:Unhandled error");
-    });
-    socket.on("disconnect", (err) => {
-        console.log("FRAME_STREAM:Disconnected");
-    });
-</script>
+<script src="/js/livestream.min.js"></script>
 {{/section}}

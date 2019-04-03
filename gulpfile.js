@@ -9,6 +9,7 @@ const plumber = require("gulp-plumber");
 const rename = require("gulp-rename");
 const sass = require("gulp-sass");
 const uglify = require("gulp-uglify");
+const babel = require("gulp-babel");
 
 const clean = () => del(["./vendor/"]);
 
@@ -74,6 +75,9 @@ const js = () => gulp
         './js/*.js',
         '!./js/*.min.js',
     ])
+    .pipe(babel({
+        presets: ["@babel/preset-env"]
+    }))
     .pipe(uglify())
     .pipe(rename({
         suffix: '.min'

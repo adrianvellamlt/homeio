@@ -6,6 +6,19 @@
             "type": "shell",
             "command": "tsc",
             "group": "build"
+        },
+        {
+            "label": "gulp",
+            "type": "shell",
+            "command": "gulp build",
+            "group": "build"
+        },
+        {
+            "label": "build",
+            "dependsOn": [
+                "typescript",
+                "gulp"
+            ]
         }
     ]
 }

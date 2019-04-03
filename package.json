@@ -4,20 +4,21 @@
   "description": "HomeIO API with streaming and IOT functionalities",
   "main": "app.js",
   "dependencies": {
-    "net": "^1.0.2",
-    "socket.io": "^2.2.0",
-    "compression": "^1.7.4",
-    "express": "~4.16.4",
-    "express-session": "^1.15.6",
-    "express-validator": "^5.3.1",
-    "express-handlebars": "^3.0.2",
     "@fortawesome/fontawesome-free": "5.8.1",
     "bootstrap": "4.3.1",
     "chart.js": "2.8.0",
+    "compression": "^1.7.4",
+    "css-element-queries": "^1.1.1",
     "datatables.net-bs4": "1.10.19",
+    "express": "~4.16.4",
+    "express-handlebars": "^3.0.2",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.3.1",
+    "fetch": "^1.1.0",
     "jquery": "3.3.1",
     "jquery.easing": "^1.4.1",
-    "fetch": "^1.1.0"
+    "net": "^1.0.2",
+    "socket.io": "^2.2.0"
   },
   "devDependencies": {
     "@types/compression": "^0.0.36",
@@ -36,7 +37,10 @@
     "gulp-rename": "1.4.0",
     "gulp-sass": "^4.0.2",
     "gulp-uglify": "3.0.2",
-    "merge-stream": "^1.0.1"
+    "merge-stream": "^1.0.1",
+    "gulp-babel": "^8.0.0",
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3"
   },
   "scripts": {
     "start": "npm run serve",

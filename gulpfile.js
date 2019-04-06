@@ -4,12 +4,13 @@ const autoprefixer = require("gulp-autoprefixer");
 const cleanCSS = require("gulp-clean-css");
 const del = require("del");
 const gulp = require("gulp");
+const sass = require("gulp-sass");
 const merge = require("merge-stream");
 const plumber = require("gulp-plumber");
 const rename = require("gulp-rename");
-const sass = require("gulp-sass");
 const uglify = require("gulp-uglify");
-const babel = require("gulp-babel");
+const sourcemaps = require('gulp-sourcemaps');
+const babel = require("gulp-babel"); // used to transpile
 
 const clean = () => del(["./vendor/"]);
 
@@ -33,10 +34,8 @@ const modules = () => {
         ])
         .pipe(gulp.dest('./public/vendor/jquery'));
 
-    const fetch = gulp.src('./node_modules/fetch/lib/*.js')
-        .pipe(gulp.dest('./public/vendor/fetch'));
-
-    const socketio = gulp.src('./node_modules/socket.io/lib/*.js')
+    const socketio = gulp
+        .src('./node_modules/socket.io/lib/*.js')
         .pipe(gulp.dest('./public/vendor/socketio'));
 
     return merge(
@@ -46,7 +45,6 @@ const modules = () => {
         fontAwesome,
         jqueryEasing,
         jquery,
-        fetch,
         socketio
     );
 };
@@ -75,13 +73,15 @@ const js = () => gulp
         './js/*.js',
         '!./js/*.min.js',
     ])
+    .pipe(sourcemaps.init())
     .pipe(babel({
         presets: ["@babel/preset-env"]
     }))
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(rename({
         suffix: '.min'
     }))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('./public/js'));
 
 const vendor = gulp.series(clean, modules);

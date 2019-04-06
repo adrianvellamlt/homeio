@@ -37,6 +37,7 @@
     "gulp-rename": "1.4.0",
     "gulp-sass": "^4.0.2",
     "gulp-uglify": "3.0.2",
+    "gulp-sourcemaps": "^2.6.5",
     "merge-stream": "^1.0.1",
     "gulp-babel": "^8.0.0",
     "@babel/core": "^7.4.3",

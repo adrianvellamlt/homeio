@@ -12,6 +12,7 @@ export default class SocketStream
     frame?: string;
     clientsocket?: Socket;
     interval: any;
+    promise: Promise<SocketStream>;
 
     constructor(identifier: string, ip: string, port: number)
     {
@@ -22,51 +23,54 @@ export default class SocketStream
         this.clientsocket = undefined;
         this.frame = undefined;
 
-        this.init();
+        this.promise = this.init();
 
         this.interval = setInterval(() => {
             if (this.frame !== undefined) { 
-                this.io.of(`/stream-${identifier}`).emit("frame", this.frame);
+                this.io.of(`/${identifier}`).emit("frame", this.frame);
             }
         }, 1000 / this.FPS);
     }
 
-    private init () {
-        const clientsocket = new Socket();
-        const b64Signature = "data:image/jpeg;base64,";
+    private init = () => 
+        new Promise<SocketStream>((resolve, reject) => {
+            const clientsocket = new Socket();
+            const b64Signature = "data:image/jpeg;base64,";
 
-        let imageBuffer = "";
+            let imageBuffer = "";
 
-        clientsocket.connect(this.port, this.ip, () => {
-            console.log(`Connected to server at ${this.ip}:${this.port}`);
-        });
-        
-        clientsocket.on("data", (data: Buffer) => {
-            const stringified = data.toString();
+            clientsocket.connect(this.port, this.ip, () => {
+                console.log(`Connected to server at ${this.ip}:${this.port}`);
+                resolve(this);
+            });
             
-            const split = (imageBuffer + stringified).split(b64Signature).filter(str => str !== "");
+            clientsocket.on("data", (data: Buffer) => {
+                const stringified = data.toString();
+                
+                const split = (imageBuffer + stringified).split(b64Signature).filter(str => str !== "");
 
-            if (split.length > 2)
-            {
-                for (let i = 0; i < split.length - 2; i ++)
+                if (split.length > 2)
                 {
-                    this.frame = b64Signature + split[i];
+                    for (let i = 0; i < split.length - 2; i ++)
+                    {
+                        this.frame = b64Signature + split[i];
+                    }
+                    imageBuffer = b64Signature + split.slice(split.length - 2).join(b64Signature);
                 }
-                imageBuffer = b64Signature + split.slice(split.length - 2).join(b64Signature);
-            }
-            else imageBuffer = b64Signature + split.join(b64Signature);
-        });
+                else imageBuffer = b64Signature + split.join(b64Signature);
+            });
 
-        clientsocket.on("error", (err: Error) => {
-            console.log("Exception raised: ", err.toString());
-        });
-        
-        clientsocket.on("close", () => {
-            console.log("Connection dropped");
-        });
+            clientsocket.on("error", (err: Error) => {
+                console.log("Exception raised: ", err.toString());
+                reject(err);
+            });
+            
+            clientsocket.on("close", () => {
+                console.log("Connection dropped");
+            });
 
-        this.clientsocket = clientsocket;
-    }
+            this.clientsocket = clientsocket;
+        });
 
     get FPS() { return 24; };
 }

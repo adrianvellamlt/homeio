@@ -18,18 +18,25 @@ export default class StreamRepository
         this.streamProviderIP = streamProviderIP;
     }
 
-    register(clientIP: string, ips: Array<string>, gridX: number, gridY: number)
+    async register(clientIP: string, ips: Array<string>, gridX: number, gridY: number)
     {
-        const identifier = `${ips.sort().join("_").split(".").join("")}-${gridX}x${gridY}`;
+        const identifier = `stream-${ips.sort().join("_").split(".").join("")}-${gridX}x${gridY}`;
 
         if (this.repository[identifier] === undefined)
         {
+            const stream = await new SocketStream(identifier, this.streamProviderIP, this.port).promise;
+
             this.repository[identifier] = {
-                Stream: new SocketStream(identifier, this.streamProviderIP, this.port),
+                Stream: stream,
                 Clients: new Array<string>(clientIP)
             };
         }
-        else this.repository[identifier].Clients.push(clientIP);
+        else if (!this.repository[identifier].Clients.includes(clientIP))
+        {
+            this.repository[identifier].Clients.push(clientIP);
+        }
+
+        return identifier;
     }
 
     deregister(clientIP: string)

@@ -1,4 +1,4 @@
-const namespace = "stream-1921681103-2x2";
+let identifier = undefined;
 
 let socket = undefined;
 let isConnected = false;
@@ -86,8 +86,10 @@ const draw = (frame) => {
     image.src = frame;
 };
 
-const connect = () => {
-    socket = io.connect(`${window.location.protocol}//${window.location.hostname}:${window.location.port}/${namespace}`);
+const connect = (id) => {
+    if (id !== undefined) identifier = id;
+
+    socket = io.connect(`${window.location.protocol}//${window.location.hostname}:${window.location.port}/${id}`);
 
     socket.on("connect", () => {
         isConnected = true;
@@ -141,6 +143,36 @@ const refresh = () => {
     setTimeout(() => connect(), 5000);
 };
 
-connect();
+const setupEvents = () => {
+    window.addEventListener('beforeunload', (event) => {
+        event.preventDefault();
+        
+        navigator.sendBeacon("/api/stream/deregister");
 
-new ResizeSensor(document.getElementsByClassName("container-fluid")[0], () => resizeCanvas());
+        event.returnValue = 'OK';
+    });
+
+    new ResizeSensor(document.getElementsByClassName("container-fluid")[0], () => resizeCanvas());
+};
+
+fetch("/api/stream/register", {
+    method: "POST",
+    body: JSON.stringify({
+        "cam-ips": ["10.0.75.1"],
+        "grid-x": 2,
+        "grid-y": 2
+    }),
+    headers: {
+        "Content-Type": "application/json"
+    }
+})
+.then(response => response.clone().text())
+.then(response => connect(response))
+.catch(error => console.log("API_ERROR: COULD NOT REGISTER STREAM", error.message));
+
+setupEvents();
+
+document.getElementsByClassName("active")[0].classList.remove("active");
+Array.from(document.getElementsByClassName("nav-link"))
+    .filter(element => element.getAttribute("href") == "live")[0]
+    .parentNode.classList.add("active");

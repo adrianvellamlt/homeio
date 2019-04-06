@@ -7,18 +7,18 @@ export default class StreamController {
     constructor(app: Application)
     {
         app.post("/api/stream/register", this.register);
-        app.delete("/api/stream/register", this.deregister);
+        app.post("/api/stream/deregister", this.deregister);
     }
     
-    register(req: Request, res: Response)
+    async register(req: Request, res: Response)
     {
-        const ips = req.body["cam-ips"];
-        const gridX = req.body["grid-x"];
-        const gridY = req.body["grid-y"];
+        const ips = <Array<string>>req.body["cam-ips"];
+        const gridX = <number>req.body["grid-x"];
+        const gridY = <number>req.body["grid-y"];
 
-        streamRepository.register(getIP(req), ips, gridX, gridY);
+        const identifier = await <Promise<string>>streamRepository.register(getIP(req), ips, gridX, gridY);
 
-        res.sendStatus(200).end();
+        res.status(200).send(identifier);
     }
 
     deregister(req: Request, res: Response)

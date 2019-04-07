@@ -18,7 +18,9 @@
     "jquery": "3.3.1",
     "jquery.easing": "^1.4.1",
     "net": "^1.0.2",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0",
+    "pristinejs": "^0.1.6"
   },
   "devDependencies": {
     "@types/compression": "^0.0.36",

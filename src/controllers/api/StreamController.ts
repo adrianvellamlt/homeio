@@ -6,24 +6,24 @@ export default class StreamController {
 
     constructor(app: Application)
     {
-        app.post("/api/stream/register", this.register);
-        app.post("/api/stream/deregister", this.deregister);
+        app.post("/api/stream/subscribe", this.subscribe);
+        app.post("/api/stream/unsubscribe", this.unsubscribe);
     }
     
-    async register(req: Request, res: Response)
+    async subscribe(req: Request, res: Response)
     {
         const ips = <Array<string>>req.body["cam-ips"];
         const gridX = <number>req.body["grid-x"];
         const gridY = <number>req.body["grid-y"];
 
-        const identifier = await <Promise<string>>streamRepository.register(getIP(req), ips, gridX, gridY);
+        const identifier = await <Promise<string>>streamRepository.subscribe(getIP(req), ips, gridX, gridY);
 
         res.status(200).send(identifier);
     }
 
-    deregister(req: Request, res: Response)
+    unsubscribe(req: Request, res: Response)
     {
-        streamRepository.deregister(getIP(req));
+        streamRepository.unsubscribe(getIP(req));
         res.sendStatus(200).end();
     }
 

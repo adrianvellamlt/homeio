@@ -1,6 +1,55 @@
 <canvas id="video-stream">
 </canvas>
 
-{{#section 'script'}}
+{{#section 'surveillance_sidebar_items'}}
+<li class="nav-item">
+    <a class="nav-link" href="#" data-toggle="modal" data-target="#liveSettingsModal">
+        <i class="fas fa-fw fa-cog"></i>
+        <span>Settings</span>
+    </a>
+</li>
+{{/section}}
+
+{{#section 'modals'}}
+<!-- Live Settings Modal-->
+<div class="modal fade" id="liveSettingsModal" tabindex="-1" role="dialog" aria-labelledby="liveSettingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="liveSettingsModalLabel">Change Livestream Settings</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form id="liveSettings" role="form" data-toggle="validator">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="stream-selection">available cameras</label>
+                        <select class="form-control" id="stream-selection" multiple required>
+                            <option value="10.0.75.1:8089">Monitor Webcam</option>
+                            <option value="10.0.75.1:8090">Tower Webcam</option>
+                            <option value="192.168.1.81:8089">PI Webcam</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="grid-shape-x">number of columns</label>
+                        <input class="form-control" id="grid-shape-x" type="number" min="1" max="3" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="grid-shape-y">number of rows</label>
+                        <input class="form-control" id="grid-shape-y" type="number" min="1" max="3" required/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit">Save</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{/section}}
+
+{{#section 'scripts'}}
 <script src="/js/livestream.min.js"></script>
 {{/section}}

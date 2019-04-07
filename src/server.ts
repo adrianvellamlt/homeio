@@ -1,5 +1,6 @@
 // import errorHandler from "./utils/errorHandler";
 import app from "./app";
+import * as SocketIO from "socket.io";
 
 // app.use(errorHandler()); //todo: implement error handler
 
@@ -13,3 +14,4 @@ const server = app.listen(app.get("port"), () => {
 });
 
 export default server;
+export const io = SocketIO(server);

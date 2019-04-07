@@ -1,7 +1,5 @@
 import { Socket } from "net";
-import * as SocketIO from "socket.io";
-
-import server from "../server";
+import { io } from "../server";
 
 export default class SocketStream
 {
@@ -17,7 +15,7 @@ export default class SocketStream
     constructor(identifier: string, ip: string, port: number)
     {
         this.identifier = identifier;
-        this.io = SocketIO(server);
+        this.io = io;
         this.ip = ip;
         this.port = port;
         this.clientsocket = undefined;
@@ -73,4 +71,12 @@ export default class SocketStream
         });
 
     get FPS() { return 24; };
+
+    setSettings (streamIPs: Array<string>, gridX: number, gridY: number) 
+    {
+        if (this.clientsocket === undefined) return;
+
+        const settings = `${streamIPs.join(",")}|${gridX}x${gridY}\r`;
+        (<Socket>this.clientsocket).write(settings);
+    }
 }

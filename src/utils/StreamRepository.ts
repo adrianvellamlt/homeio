@@ -18,14 +18,17 @@ export default class StreamRepository
         this.streamProviderIP = streamProviderIP;
     }
 
-    async register(clientIP: string, ips: Array<string>, gridX: number, gridY: number)
+    async subscribe(clientIP: string, ips: Array<string>, gridX: number, gridY: number)
     {
-        const identifier = `stream-${ips.sort().join("_").split(".").join("")}-${gridX}x${gridY}`;
+        const cleanedIpId = ips.sort().join("_").split(".").join("").split(":").join("");
+        const identifier = `stream-${cleanedIpId}-${gridX}x${gridY}`;
 
         if (this.repository[identifier] === undefined)
         {
             const stream = await new SocketStream(identifier, this.streamProviderIP, this.port).promise;
 
+            stream.setSettings(ips, gridX, gridY);
+            
             this.repository[identifier] = {
                 Stream: stream,
                 Clients: new Array<string>(clientIP)
@@ -39,7 +42,7 @@ export default class StreamRepository
         return identifier;
     }
 
-    deregister(clientIP: string)
+    unsubscribe(clientIP: string)
     {
         for(let identifier in this.repository)
         {

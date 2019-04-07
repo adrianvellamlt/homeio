@@ -78,6 +78,8 @@
         </div>
       </li>
 
+      {{{_sections.surveillance_sidebar_items}}}
+
       <!-- Divider -->
       <hr class="sidebar-divider">
 
@@ -297,8 +299,8 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Adrian Vella</span>
+                <img class="img-profile rounded-circle" src="https://lh3.googleusercontent.com/-CNX0fkinH7s/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdf_4cyaYN97MsCxIg0qFS1eyRuDg/s32-c-mo/photo.jpg">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -386,6 +388,8 @@
     </div>
   </div>
 
+  {{{_sections.modals}}}
+
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -393,16 +397,15 @@
   <!-- Core plugin JavaScript-->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-  <!--SocketIO-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+  <!-- Other essential plugins -->
+  <script src="vendor/css-element-queries/ResizeSensor.min.js"></script>
+  <script src="vendor/pristinejs/pristine.min.js"></script>
+  <script src="vendor/socketio/socket.io.slim.js"></script>
 
   <!-- Custom scripts for all pages-->
   <script src="js/theme.min.js"></script>
 
-  <!-- Custom scripts for all pages-->
-  <script src="js/resizeSensor.min.js"></script>
-
-  {{{_sections.script}}}
+  {{{_sections.scripts}}}
 
 </body>
 

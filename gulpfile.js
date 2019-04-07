@@ -34,9 +34,21 @@ const modules = () => {
         ])
         .pipe(gulp.dest('./public/vendor/jquery'));
 
-    const socketio = gulp
-        .src('./node_modules/socket.io/lib/*.js')
+    const socketioclient = gulp
+        .src('./node_modules/socket.io-client/dist/*.slim.js')
         .pipe(gulp.dest('./public/vendor/socketio'));
+
+    const cssElementQueries = gulp
+        .src('./node_modules/css-element-queries/src/*.js')
+        .pipe(uglify())
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(gulp.dest('./public/vendor/css-element-queries'));
+
+    const pristinejs = gulp
+        .src('./node_modules/pristinejs/dist/*.min.js')
+        .pipe(gulp.dest('./public/vendor/pristinejs'));
 
     return merge(
         bootstrapJS,
@@ -45,7 +57,9 @@ const modules = () => {
         fontAwesome,
         jqueryEasing,
         jquery,
-        socketio
+        socketioclient,
+        cssElementQueries,
+        pristinejs
     );
 };
 
@@ -77,7 +91,7 @@ const js = () => gulp
     .pipe(babel({
         presets: ["@babel/preset-env"]
     }))
-    // .pipe(uglify())
+    .pipe(uglify())
     .pipe(rename({
         suffix: '.min'
     }))

@@ -1,13 +1,20 @@
 (function($) {
   "use strict"; // Start of use strict
 
+  $(document).ready(() => {
+    var sideBarState = localStorage.getItem("homeio-sidebar");
+    if (sideBarState === undefined) localStorage.setItem("homeio-sidebar", "open");
+    else if (sideBarState === "close") $("#sidebarToggle").click();
+  });
   // Toggle the side navigation
   $("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {
     $("body").toggleClass("sidebar-toggled");
     $(".sidebar").toggleClass("toggled");
     if ($(".sidebar").hasClass("toggled")) {
       $('.sidebar .collapse').collapse('hide');
-    };
+      localStorage.setItem("homeio-sidebar","close");
+    }
+    else localStorage.setItem("homeio-sidebar","open");
   });
 
   // Close any open menu accordions when window is resized below 768px

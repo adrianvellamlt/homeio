@@ -152,13 +152,13 @@ window.onload = function () {
         setTimeout(() => connect(), 5000);
     };
 
-    const subscribeToStream = (ips, gridX, gridY) => {
+    const subscribeToStream = (streamSelection) => {
         fetch("/api/stream/subscribe", {
             method: "POST",
             body: JSON.stringify({
-                "cam-ips": ips,
-                "grid-x": gridX,
-                "grid-y": gridY
+                "cam-ips": streamSelection.streams,
+                "grid-x": streamSelection.gridX,
+                "grid-y": streamSelection.gridY
             }),
             headers: {
                 "Content-Type": "application/json"
@@ -169,19 +169,19 @@ window.onload = function () {
         .catch(error => console.log("API_ERROR: COULD NOT SUBSCRIBE TO STREAM", error.message));
     }
 
+    const getStreamSelection = () => {
+        return {
+            streams: Array.from(document.querySelectorAll("#liveSettings #stream-selection option:checked")).map(elem => elem.value),
+            gridX: parseInt(document.querySelector("#liveSettings #grid-shape-x").value),
+            gridY: parseInt(document.querySelector("#liveSettings #grid-shape-y").value)
+        };
+    };
+
     const subscribeToDifferentStream = () => {
-        const selectedStreams = [];
-
-
-        const selectedStreamsOptions = document.getElementById("stream-selection").options;
-        for (let i = 0; i < selectedStreamsOptions.length; i++)
-        {
-            selectedStreamsOptions[i].selected && selectedStreams.push(selectedStreamsOptions[i].value);
-        }
-        const gridX = parseInt(document.getElementById("grid-shape-x").value);
-        const gridY = parseInt(document.getElementById("grid-shape-y").value);
+        const streamSelection = getStreamSelection();
 
         console.log("Unsubscribing ...");
+
         fetch("/api/stream/unsubscribe", { method: "POST" })
         .then(response => {
             if (response.status === 200)
@@ -189,7 +189,7 @@ window.onload = function () {
                 console.log("Tearing down ...");
                 teardown();
                 console.log("Subscribing ...");
-                subscribeToStream(selectedStreams, gridX, gridY);
+                subscribeToStream(getStreamSelection());
             }
             else console.log("API_ERROR: COULD NOT UNSUBSCRIBE FROM STREAM");
         });    
@@ -207,7 +207,7 @@ window.onload = function () {
         new ResizeSensor(document.getElementsByClassName("container-fluid")[0], () => resizeCanvas());
     };
 
-    subscribeToStream(["10.0.75.1:8089"], 2, 2);
+    subscribeToStream(getStreamSelection());
     setupEvents();
 
     document.getElementsByClassName("active")[0].classList.remove("active");

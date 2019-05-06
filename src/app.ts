@@ -22,6 +22,9 @@ app.engine('handlebars', handlebars({
           if (!this._sections) this._sections = {};
             this._sections[name] = options.fn(this); 
             return null;
+        },
+        selected: function (isSelected: boolean) {
+            return isSelected ? "selected" : "";
         }
     }
 }));
@@ -40,6 +43,6 @@ app.set("port", process.env.PORT || 3000);
 new StreamController(app);
 new ViewController(app);
 
-export const streamRepository = new StreamRepository("10.0.75.1", 8080);
+export const streamRepository = new StreamRepository("192.168.1.100", 8080);
 
 export default app;

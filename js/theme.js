@@ -5,6 +5,14 @@
     var sideBarState = localStorage.getItem("homeio-sidebar");
     if (sideBarState === undefined) localStorage.setItem("homeio-sidebar", "open");
     else if (sideBarState === "close") $("#sidebarToggle").click();
+
+    var spinner = document.querySelector(".spinner");
+    spinner.style.WebkitTransition = 'visibility .5s, opacity .5s';
+    spinner.style.opacity = '0';
+    spinner.style.display = 'none';
+    setTimeout(() => {
+      document.querySelector("#wrapper").style.display = "";
+    }, 250);
   });
   // Toggle the side navigation
   $("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {

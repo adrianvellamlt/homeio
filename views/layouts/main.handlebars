@@ -18,12 +18,51 @@
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
   <link rel='shortcut icon' type='image/x-icon' href='/img/favicon.ico' />
+
+  <style>
+    .spinner {
+      display: grid;
+      height: 100vh;
+      margin: 0;
+      place-items: center center;
+    }
+
+    .double-bounce {
+      width: 10vw;
+      height: 10vw;
+      border-radius: 50%;
+      background-color: #4e73df;
+      opacity: 0.6;
+      
+      -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+      animation: sk-bounce 2.0s infinite ease-in-out;
+    }
+
+    @-webkit-keyframes sk-bounce {
+      0%, 100% { -webkit-transform: scale(0.0) }
+      50% { -webkit-transform: scale(1.0) }
+    }
+
+    @keyframes sk-bounce {
+      0%, 100% { 
+        transform: scale(0.0);
+        -webkit-transform: scale(0.0);
+      } 50% { 
+        transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+      }
+    }
+  </style>
 </head>
 
 <body id="page-top">
 
+  <div class="spinner">
+      <div class="double-bounce"></div>
+  </div>
+
   <!-- Page Wrapper -->
-  <div id="wrapper">
+  <div id="wrapper" style="display:none">
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">

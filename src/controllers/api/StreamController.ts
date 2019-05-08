@@ -13,10 +13,10 @@ export default class StreamController {
     async subscribe(req: Request, res: Response)
     {
         const ips = <Array<string>>req.body["cam-ips"];
-        const gridX = <number>req.body["grid-x"];
-        const gridY = <number>req.body["grid-y"];
+        const rows = <number>req.body["grid-rows"];
+        const columns = <number>req.body["grid-columns"];
 
-        const identifier = await <Promise<string>>streamRepository.subscribe(getIP(req), ips, gridX, gridY);
+        const identifier = await <Promise<string>>streamRepository.subscribe(getIP(req), ips, rows, columns);
 
         res.status(200).send(identifier);
     }

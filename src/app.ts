@@ -43,6 +43,6 @@ app.set("port", process.env.PORT || 3000);
 new StreamController(app);
 new ViewController(app);
 
-export const streamRepository = new StreamRepository("192.168.1.100", 8080);
+export const streamRepository = new StreamRepository("192.168.1.121", 8080);
 
 export default app;

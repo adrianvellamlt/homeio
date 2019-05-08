@@ -19,12 +19,12 @@ export default class ViewController {
         res.render("live", {
             title: "Live",
             streamList: [
-                { selected: true, ip: "raspione", port:"8089", text: "Raspi One" },
-                { selected: false, ip: "raspitwo", port:"8089", text: "Raspi Two" },
-                { selected: true, ip: "raspithree", port:"8089", text: "Raspi Three" },
-                { selected: false, ip: "raspifour", port:"8089", text: "Raspi Four" }
+                // { selected: true, ip: "raspione", port:"8089", text: "Raspi One" },
+                { selected: true, ip: "192.168.1.120", port:"8089", text: "Raspi Two" },
+                { selected: false, ip: "192.168.1.119", port:"8089", text: "Raspi Three" },
+                { selected: false, ip: "192.168.1.118", port:"8089", text: "Raspi Four" }
             ],
-            gridShape: { x: 2, y: 2 },
+            gridShape: { x: 1, y: 1 },
         });
     }
 

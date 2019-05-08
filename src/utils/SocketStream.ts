@@ -70,13 +70,13 @@ export default class SocketStream
             this.clientsocket = clientsocket;
         });
 
-    get FPS() { return 24; };
+    get FPS() { return 10; };
 
-    setSettings (streamIPs: Array<string>, gridX: number, gridY: number) 
+    setSettings (streamIPs: Array<string>, rows: number, columns: number) 
     {
         if (this.clientsocket === undefined) return;
 
-        const settings = `${streamIPs.join(",")}|${gridX}x${gridY}\r`;
+        const settings = `${streamIPs.join(",")}|${rows}x${columns}\r`;
         (<Socket>this.clientsocket).write(settings);
     }
 }

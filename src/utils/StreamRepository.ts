@@ -18,16 +18,16 @@ export default class StreamRepository
         this.streamProviderIP = streamProviderIP;
     }
 
-    async subscribe(clientIP: string, ips: Array<string>, gridX: number, gridY: number)
+    async subscribe(clientIP: string, ips: Array<string>, rows: number, columns: number)
     {
         const cleanedIpId = ips.sort().join("_").split(".").join("").split(":").join("");
-        const identifier = `stream-${cleanedIpId}-${gridX}x${gridY}`;
+        const identifier = `stream-${cleanedIpId}-${rows}x${columns}`;
 
         if (this.repository[identifier] === undefined)
         {
             const stream = await new SocketStream(identifier, this.streamProviderIP, this.port).promise;
 
-            stream.setSettings(ips, gridX, gridY);
+            stream.setSettings(ips, rows, columns);
             
             this.repository[identifier] = {
                 Stream: stream,

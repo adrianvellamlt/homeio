@@ -157,8 +157,8 @@ window.onload = function () {
             method: "POST",
             body: JSON.stringify({
                 "cam-ips": streamSelection.streams,
-                "grid-x": streamSelection.gridX,
-                "grid-y": streamSelection.gridY
+                "grid-rows": streamSelection.gridRows,
+                "grid-columns": streamSelection.gridColumns
             }),
             headers: {
                 "Content-Type": "application/json"
@@ -172,14 +172,12 @@ window.onload = function () {
     const getStreamSelection = () => {
         return {
             streams: Array.from(document.querySelectorAll("#liveSettings #stream-selection option:checked")).map(elem => elem.value),
-            gridX: parseInt(document.querySelector("#liveSettings #grid-shape-x").value),
-            gridY: parseInt(document.querySelector("#liveSettings #grid-shape-y").value)
+            gridRows: parseInt(document.querySelector("#liveSettings #grid-rows").value),
+            gridColumns: parseInt(document.querySelector("#liveSettings #grid-columns").value)
         };
     };
 
     const subscribeToDifferentStream = () => {
-        const streamSelection = getStreamSelection();
-
         console.log("Unsubscribing ...");
 
         fetch("/api/stream/unsubscribe", { method: "POST" })
